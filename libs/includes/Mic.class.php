@@ -5,7 +5,7 @@
  * private
  * protected
  */
-class mic{
+class Mic{
     public $brand;
     public $colour;
     public $light;

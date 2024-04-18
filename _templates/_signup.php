@@ -1,17 +1,25 @@
 <?
 $signup = false;
+print_r($_POST);
+print("it stops here right?");
 if (!empty($_POST['username']) and !empty($_POST['email_addr']) and !empty($_POST['pass']) and !empty($_POST['phone'])) {
+  print("does it comes here?");
   $username = $_POST['username'];
   $email = $_POST['email_addr'];
   $password = $_POST['pass'];
   $phone = $_POST['phone'];
-  $result = signup($username, $email, $password, $phone);
+  print("but is it here?");
+  $error = User::signup($username, $email, $password, $phone);
+  print("also here?");
   $signup = true;
+  var_dump($error);
+  print("error should be here");
 }
 ?>
 <?
 if ($signup) {
-  if ($result) { ?>
+  if (!$error) {
+    var_dump($error); ?>
     <main class="container">
       <div class="bg-body-tertiary p-5 rounded mt-3">
         <h1>Signup success</h1>
@@ -20,11 +28,12 @@ if ($signup) {
       </div>
     </main>
   <?
-  } else { ?>
+  } else {
+    var_dump($error); ?>
     <main class="container">
       <div class="bg-body-tertiary p-5 rounded mt-3">
         <h1>Signup failed</h1>
-        <p class="lead">Something went wrong</p>
+        <p class="lead">Something went wrong, <?= $error ?></p>
         <a class="btn btn-lg btn-primary" href="/docs/5.3/components/navbar/" role="button">View navbar docs »</a>
       </div>
     </main>

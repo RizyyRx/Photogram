@@ -1,15 +1,22 @@
 <pre>
 <?php
-print("_SERVER\n");
-print_r($_SERVER);
-print("_GET\n");
-print_r($_GET);
-print("_POST\n");
-print_r($_POST);
-print("_FILES\n");
-print_r($_FILES);
-print("_COOKIE\n");
-print_r($_COOKIE);
+include "libs/load.php";
+//include "_templates/_signup.php";
+// print("_SERVER\n");
+// print_r($_SERVER);
+// print("_GET\n");
+// print_r($_GET);
+// print("_POST\n");
+ print_r($_POST);
+// print("_FILES\n");
+// print_r($_FILES);
+// print("_COOKIE\n");
+// print_r($_COOKIE);
+// print_r($_POST);
+// print("\n");
+//  var_dump($error);
+
+
 
 ?>
 </pre>
