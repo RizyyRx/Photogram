@@ -1,7 +1,7 @@
 <?php
 include 'libs/load.php';
 $user="maeve";
-$pass="yooyyo";
+$pass="yoyoboi";
 $result=null;
 if(isset($_GET['logout'])){
     Session::destroy();
