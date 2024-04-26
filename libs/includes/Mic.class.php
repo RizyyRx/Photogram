@@ -12,6 +12,12 @@ class Mic{
     private $model;
     public $price;
 
+    public function __call($name,$arguments){
+        print("call is here...dont worry\n");
+        print($name."\n");
+        print_r($arguments);
+    }
+
     public function __construct()
     {
         print("construction done...\n");

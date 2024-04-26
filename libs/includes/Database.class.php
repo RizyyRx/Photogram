@@ -5,10 +5,10 @@ class Database
     public static function getConnection()
     {
         if (Database::$conn == null) {
-            $servername = "<servername here>";
-            $username = "<usrname here>";
-            $password = "<password here>";
-            $dbname = "<DB name here>";
+            $servername = get_config('db_server');
+            $username = get_config('db_username');
+            $password = get_config('db_password');
+            $dbname = get_config('db_name');
 
             // Create connection
             $connection = new mysqli($servername, $username, $password, $dbname);
