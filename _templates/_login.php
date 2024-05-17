@@ -31,6 +31,7 @@ else{
       <input name="pass" type="password" class="form-control" id="floatingPassword" placeholder="Password">
       <label for="floatingPassword">Password</label>
     </div>
+    <input name="fingerprint" type="hidden" id="fingerprint" value="">
 
     <div class="form-check text-start my-3">
       <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">

@@ -5,26 +5,7 @@ include 'libs/load.php';
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 
-<head>
-  <script src="../assets/js/color-modes.js"></script>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Rizwan">
-  <meta name="generator" content="Hugo 0.122.0">
-  <title>Photogram by LAHTP</title>
-
-  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
-
-
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-
-  <link href="/app/assets/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css" integrity="sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <? load_template("_headcss");?>
-</head>
+<?load_template("_head");?>
 
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">

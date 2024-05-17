@@ -4,9 +4,17 @@ include_once 'libs/includes/Session.class.php';
 include_once 'libs/includes/Database.class.php';
 include_once "libs/includes/User.class.php";
 include_once 'libs/includes/Mic.class.php';
+include_once '/home/rizwankendo/htdocs/app/libs/includes/UserSession.class.php';
 
 global $__site_config;
-$__site_config= file_get_contents($_SERVER['DOCUMENT_ROOT'].'/../photogram_config.json');//file_get_contents() is the preferred way to read the contents of a file into a string
+//$__site_config_path = dirname(is_link($_SERVER['DOCUMENT_ROOT']) ? readlink($_SERVER['DOCUMENT_ROOT']) : $_SERVER['DOCUMENT_ROOT']).'/photogramconfig.json';
+if(is_link($_SERVER['DOCUMENT_ROOT'])){//is_link checks if the given directory is a symbolic link 
+    $__site_config_path=dirname(readlink($_SERVER['DOCUMENT_ROOT'])).'/photogramconfig.json';//readlink returns the target of the link.dirname() removes the last content in a directory path.(exa: dirname(var/www/html) gives var/www as output)
+}
+else{
+    $__site_config_path=dirname($_SERVER['DOCUMENT_ROOT']).'/photogramconfig.json';
+}
+$__site_config = file_get_contents($__site_config_path);
 
 
 Session::start();

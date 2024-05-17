@@ -16,7 +16,7 @@ if(Session::get('is_loggedin')){//initially false,so else part will execute
     $userobj->setBio("oh sorry....im the best writer");
     print("<br>".$userobj->getBio());
     print("<br>".$userobj->getLastname());
-
+    $userobj->yoNotAFunction();
 
 }
 else{
@@ -27,7 +27,7 @@ else{
         $userobj=new User($user);//username given as a parameter i.e to the __construct()
         echo "login success, ",$userobj->getUsername();
         Session::set('is_loggedin',true);//since is_loggedin set true,if part will execute next time
-        Session::set('session_username',$result);//the username is saved to session_user variable in $_SESSION[] 
+        Session::set('session_username',$result);//the username is saved to session_username variable in $_SESSION[] 
     }
     else{
         echo "login failed";

@@ -12,8 +12,12 @@ class User{
         $property = strtolower(preg_replace('/\B([A-Z])/', '_$1', $property));//replaces string like "getDobOfUser" as "get_dob_of_user"
         if (substr($name, 0, 3) == "get") {// substr returns the portion of string specified by the offset and length parameters.
             return $this->getData($property);//if "getFirstname" is called as a function by an object,it will be filtered as "firstname" and given in the place of $property
-        } elseif (substr($name, 0, 3) == "set") {
+        }
+        elseif (substr($name, 0, 3) == "set") {
             return $this->setData($property, $arguments[0]);
+        }
+        else{
+            throw new Exception("User::__call()->$name, function unavailable");
         }
     }
 
@@ -54,13 +58,13 @@ class User{
         }
     }
 
-//user id fetched in __construct() function
+//user id fetched in __construct() function with either username or id
     public function __construct($username){
         $this->conn=Database::getConnection();//$this refers to the name of object that is constructed
         $this->username=$username;//the username in $this->username is not defined as a property
         //so, it is basically being assigned to a value here...since it is undefined
         $this->id=null;
-        $sql="SELECT `id` FROM `photogram credentials` WHERE `username` = '$username'";
+        $sql="SELECT `id` FROM `photogram credentials` WHERE `username` = '$username' OR 'id' = '$username'";
         try{
             $result=$this->conn->query($sql);
             if($result->num_rows==1){
