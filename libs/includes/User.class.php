@@ -23,20 +23,31 @@ class User{
 
 
     public static function signup($user, $email, $pass, $phone){
+
         $options = ['cost' => 9];
         $pass=password_hash($pass, PASSWORD_BCRYPT, $options);
         $conn=Database::getConnection();
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
         $sql = "INSERT INTO `photogram credentials` (`username`, `password`, `email`, `phone no`, `blocked`, `active`)
         VALUES ('$user','$pass','$email','$phone','0','1')";
         $error = false;
-        if ($conn->query($sql) === true) {
-            $error = false;
-        } else {
-            // echo "Error: " . $sql . "<br>" . $conn->error;
-            $error = $conn->error;
+        try{
+            if ($conn->query($sql) === true) {
+                $error = false;
+            } else {
+                // echo "Error: " . $sql . "<br>" . $conn->error;
+                $error = $conn->error;
+            }
+        }
+        catch (mysqli_sql_exception $e) {
+            $error = $e->getMessage();  // Capture the exception message
+        }
+        finally {
+            $conn->close();
         }
     
-        $conn->close();
         return $error;
     }
 

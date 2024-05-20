@@ -2,7 +2,7 @@
 
 class UserSession{
 
-//Sets token in $_Session array if all conditions are satisfied
+//Sets token and fingerprint in $_Session array if all conditions are satisfied
     public static function authenticate($user,$pass){
         $username=User::login($user,$pass);//retrieves username
         $user=new User($username);//creates new user object(id will be acquired from __construct function)

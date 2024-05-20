@@ -5,19 +5,10 @@ include_once 'libs/includes/Database.class.php';
 include_once "libs/includes/User.class.php";
 include_once 'libs/includes/Mic.class.php';
 include_once '/home/rizwankendo/htdocs/app/libs/includes/UserSession.class.php';
+include_once 'libs/includes/WebAPI.class.php';
 
-global $__site_config;
-//$__site_config_path = dirname(is_link($_SERVER['DOCUMENT_ROOT']) ? readlink($_SERVER['DOCUMENT_ROOT']) : $_SERVER['DOCUMENT_ROOT']).'/photogramconfig.json';
-if(is_link($_SERVER['DOCUMENT_ROOT'])){//is_link checks if the given directory is a symbolic link 
-    $__site_config_path=dirname(readlink($_SERVER['DOCUMENT_ROOT'])).'/photogramconfig.json';//readlink returns the target of the link.dirname() removes the last content in a directory path.(exa: dirname(var/www/html) gives var/www as output)
-}
-else{
-    $__site_config_path=dirname($_SERVER['DOCUMENT_ROOT']).'/photogramconfig.json';
-}
-$__site_config = file_get_contents($__site_config_path);
-
-
-Session::start();
+$wapi=new WebAPI();
+$wapi->initiateSession();
 
 /**
  * used to read a config file and get the contents by providing a key
@@ -39,7 +30,7 @@ file name should be given as a parameter*/
 function load_template($name)
 {
     //print("including ".$_SERVER['DOCUMENT_ROOT']." $name.php");
-    include $_SERVER['DOCUMENT_ROOT'] . "/app/_templates/$name.php";
+    include $_SERVER['DOCUMENT_ROOT'] . get_config('base_path')."_templates/$name.php";
 }
 
 function credential_validation($username, $password)
