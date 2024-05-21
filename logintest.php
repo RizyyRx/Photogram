@@ -5,7 +5,7 @@ $pass="yoyoboi";
 $result=null;
 if(isset($_GET['logout'])){
     Session::destroy();
-    die("session destroyed,<a href='logintest.php'>login again</a>");
+    exit("session destroyed,<a href='logintest.php'>login again</a>");
 }
 
 if(Session::get('is_loggedin')){//initially false,so else part will execute

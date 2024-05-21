@@ -19,7 +19,7 @@ print_r($_SERVER);
 // print("shape is\n");
 // $mic1->getShape("this","that");
 // print_r($_SESSION);
-print($__site_config);
+// print($__site_config);
 
 ?>
 </pre>

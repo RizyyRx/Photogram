@@ -53,7 +53,7 @@ class User{
 
     public static function login($user,$pass){
         $conn=Database::getConnection();
-        $query= "SELECT * FROM `photogram credentials` WHERE `username` = '$user'";
+        $query= "SELECT * FROM `photogram credentials` WHERE `username` = '$user' OR `email` = '$user'";
         $result=$conn->query($query);
         if($result->num_rows==1){
             $row=$result->fetch_assoc();

@@ -1,5 +1,7 @@
 <?
 class Session{
+    public static $isError = false;
+
     public static function start(){
         session_start();
     }
@@ -28,6 +30,31 @@ class Session{
         else{
             return $default; //returns false if no such key exists
         }
+    }
+
+    public static function loadTemplate($name)
+    {
+        $script = $_SERVER['DOCUMENT_ROOT'] . get_config('base_path'). "_templates/$name.php";
+        if (is_file($script)) {
+            include $script;
+        } else {
+            Session::loadTemplate('_error');
+        }
+    }
+
+    public static function renderPage()
+    {
+        Session::loadTemplate('_master');
+    }
+
+    public static function currentScript()
+    {
+        return basename($_SERVER['SCRIPT_NAME'], '.php');
+    }
+
+    public static function isAuthenticated()
+    {
+        return false;
     }
 
 }
