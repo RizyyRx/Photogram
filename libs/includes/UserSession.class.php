@@ -40,13 +40,14 @@ class UserSession{
     public static function authorize($token)
     {
         try {
-            $session = new UserSession($token);
+            $session = new UserSession($token);//since new UserSession object is created, the construct func returns uid of an user in DB
             if (isset($_SERVER['REMOTE_ADDR']) and isset($_SERVER["HTTP_USER_AGENT"])) {
                 if ($session->isValid() and $session->isActive()) {
                     if ($_SERVER['REMOTE_ADDR'] == $session->getIP()) {
                         if ($_SERVER['HTTP_USER_AGENT'] == $session->getUserAgent()) {
                             if($session->getFingerprint()==$_SESSION['fingerprint']){
-                                return true;
+                                Session::$user = $session->getUser();//The retrieved User object in User.class.php is then assigned to the static property $user of the Session class.
+                                return $session;
                             }
                             else{
                                 throw new Exception("Fingerprint dosen't match");
@@ -59,11 +60,11 @@ class UserSession{
                 }
             } else throw new Exception("IP and User_agent is null");
         } catch (Exception $e) {
-            return false;
+            throw new Exception("Something is wrong");
         }
     }
 
-
+//saves the data of a row and the uid of an user in DB where token matches the token in DB
     public function __construct($token){
         $this->conn=Database::getConnection();
         $this->token=$token;
@@ -86,7 +87,7 @@ class UserSession{
             error_log("Exception: " . $e->getMessage());
         }    
     }
-
+    //retrieves a User object in User.class.php representing the user associated with the session.
     public function getUser(){
         return new User($this->uid);
     }

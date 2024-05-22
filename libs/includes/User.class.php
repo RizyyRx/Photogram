@@ -75,7 +75,7 @@ class User{
         $this->username=$username;//the username in $this->username is not defined as a property
         //so, it is basically being assigned to a value here...since it is undefined
         $this->id=null;
-        $sql="SELECT `id` FROM `photogram credentials` WHERE `username` = '$username' OR 'id' = '$username'";
+        $sql="SELECT `id` FROM `photogram credentials` WHERE `username` = '$username' OR `id` = '$username'";
         try{
             $result=$this->conn->query($sql);
             if($result->num_rows==1){
@@ -97,7 +97,7 @@ class User{
         if(!$this->conn){
             $this->conn=Database::getConnection(); 
         }
-        $sql="SELECT `$var` FROM `users` WHERE `id` = '$this->id'";
+        $sql="SELECT `$var` FROM `photogram credentials` WHERE `id` = '$this->id'";
         $result=$this->conn->query($sql);
         if($result and $result->num_rows == 1){
             return $result->fetch_assoc()["$var"]; 
@@ -111,7 +111,7 @@ class User{
         if(!$this->conn){
             $this->conn=Database::getConnection();
         }
-        $sql="UPDATE `users` SET `$var`='$value' WHERE `id`='$this->id'";
+        $sql="UPDATE `photogram credentials` SET `$var`='$value' WHERE `id`='$this->id'";
         if($this->conn->query($sql)){
             return true;
         }
@@ -128,11 +128,11 @@ class User{
             return false;
         }
     }
-//override func to get username
-    public function getUsername()
-    {
-        return $this->username;
-    }
+// //override func to get username
+//     public function getUsername()
+//     {
+//         return $this->username;
+//     }
 
 
     //ALL THESE get,set CODES ARE REPLACED BY __call PHP MAGIC FUNCTION.

@@ -17,13 +17,13 @@ class Database
                 die("Connection failed: " . $connection->connect_error);
             }
             else{
-                print("Establishing new connection......\n");
+                // print("Establishing new connection......\n");
                 Database::$conn=$connection;  //replacing null with connection instance
                 return Database::$conn; //returns the object with the connction instance
             }
         } 
         else {
-            print("Returning existing connection\n");
+            // print("Returning existing connection\n");
             return Database::$conn;  //If connection already exists, returns that existing connection
             //used to avoid creating multiple connections if a connection already exists
         }

@@ -1,6 +1,11 @@
 <?
+use MongoDB\Driver\Session as DriverSession;
+
+
 class Session{
     public static $isError = false;
+    public static $user = null;
+    public static $usersession = null;
 
     public static function start(){
         session_start();
@@ -52,10 +57,37 @@ class Session{
         return basename($_SERVER['SCRIPT_NAME'], '.php');
     }
 
+    public static function getUser()
+    {
+        return Session::$user;
+    }
+
+    public static function getUserSession(){
+        return Session::$usersession;
+    }
+
     public static function isAuthenticated()
     {
+        /**
+         * If authorize() is executed correctly, the initiateSession() in WebAPI.class will assign an UserSession class object to Session::$usersession
+         * is_object checks if Session::$usersession contains an object or not
+         * If true, it gives the UserSession object to isValid() to check if 1hr has passed since creation on that object
+         * Then the Boolean val of isValid() is returned
+         * else false is returned 
+         */
+        if(is_object(Session::getUserSession())){
+            return Session::getUserSession()->isValid();
+        } 
         return false;
     }
+
+    public static function ensureLogin(){
+        if(!Session::isAuthenticated()){
+            header("Location: /login.php");
+            die();
+        }
+    }
+
 
 }
 ?>
