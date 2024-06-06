@@ -1,26 +1,10 @@
 <?
 require_once "Database.class.php";// check if the file has already been included, and if so, not include (require) it again.
-
+include_once __DIR__ . "/../traits/SQLGetterSetter.trait.php";
 class User{
 
     private $conn;
-
-    //this php magic function replaces multiple get,set codes
-    public function __call($name, $arguments)//__call is a magic func,it executes automatically when an undefined function is called by an object
-    {
-        $property = preg_replace("/[^0-9a-zA-Z]/", "", substr($name, 3));//only replaces first 3 char as empty value("get" is removed here)
-        $property = strtolower(preg_replace('/\B([A-Z])/', '_$1', $property));//replaces string like "getDobOfUser" as "get_dob_of_user"
-        if (substr($name, 0, 3) == "get") {// substr returns the portion of string specified by the offset and length parameters.
-            return $this->getData($property);//if "getFirstname" is called as a function by an object,it will be filtered as "firstname" and given in the place of $property
-        }
-        elseif (substr($name, 0, 3) == "set") {
-            return $this->setData($property, $arguments[0]);
-        }
-        else{
-            throw new Exception("User::__call()->$name, function unavailable");
-        }
-    }
-
+    use SQLGetterSetter;
 
     public static function signup($user, $email, $pass, $phone){
 
@@ -75,6 +59,7 @@ class User{
         $this->username=$username;//the username in $this->username is not defined as a property
         //so, it is basically being assigned to a value here...since it is undefined
         $this->id=null;
+        $this->table = 'photogram credentials';
         $sql="SELECT `id` FROM `photogram credentials` WHERE `username` = '$username' OR `id` = '$username'";
         try{
             $result=$this->conn->query($sql);
@@ -93,32 +78,7 @@ class User{
         }    
     }
 
-    private function getData($var){
-        if(!$this->conn){
-            $this->conn=Database::getConnection(); 
-        }
-        $sql="SELECT `$var` FROM `photogram credentials` WHERE `id` = '$this->id'";
-        $result=$this->conn->query($sql);
-        if($result and $result->num_rows == 1){
-            return $result->fetch_assoc()["$var"]; 
-        }
-        else{
-            return null;
-        }
-    }
-
-    private function setData($var,$value){
-        if(!$this->conn){
-            $this->conn=Database::getConnection();
-        }
-        $sql="UPDATE `photogram credentials` SET `$var`='$value' WHERE `id`='$this->id'";
-        if($this->conn->query($sql)){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+    
 //override func for DOB
     public function setDob($year, $month, $day)
     {

@@ -1,11 +1,13 @@
 <?
-
+//TODO: Implement autoload of class files
 include_once 'libs/includes/Session.class.php';
 include_once 'libs/includes/Database.class.php';
 include_once "libs/includes/User.class.php";
 include_once 'libs/includes/Mic.class.php';
 include_once '/home/rizwankendo/htdocs/app/libs/includes/UserSession.class.php';
 include_once 'libs/includes/WebAPI.class.php';
+include_once 'libs/app/Post.class.php';
+
 
 $wapi=new WebAPI();
 $wapi->initiateSession();

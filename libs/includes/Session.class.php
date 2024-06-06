@@ -81,8 +81,16 @@ class Session{
         return false;
     }
 
+    /**
+     * it checks if the user is authenticated or not, if not authenicated, if part executes.
+     * which means that the user requested page but the user must first be logged in to access that page.
+     * the requested uri is stored in the _redirect session variable.
+     * Then the user is sent to login page.
+     * if login successful, user is redirected to the requested page.
+     */
     public static function ensureLogin(){
         if(!Session::isAuthenticated()){
+            Session::set('_redirect', $_SERVER['REQUEST_URI']);
             header("Location: /login.php");
             die();
         }
