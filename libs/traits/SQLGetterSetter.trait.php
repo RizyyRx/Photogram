@@ -22,7 +22,7 @@
             return $this->setData($property, $arguments[0]);
         }
         else{
-            throw new Exception("User::__call()->$name, function unavailable");
+            throw new Exception(__CLASS__."::__call()->$name, function unavailable");// __CLASS__ is a magic constant that contains the name of the current class where it is used
         }
     }
 
@@ -30,13 +30,15 @@
         if(!$this->conn){
             $this->conn=Database::getConnection(); 
         }
-        $sql="SELECT `$var` FROM `$this->table` WHERE `id` = '$this->id'";
-        $result=$this->conn->query($sql);
-        if($result and $result->num_rows == 1){
-            return $result->fetch_assoc()["$var"]; 
+        try{
+            $sql="SELECT `$var` FROM `$this->table` WHERE `id` = '$this->id'";
+            $result=$this->conn->query($sql);
+            if($result and $result->num_rows == 1){
+                return $result->fetch_assoc()["$var"]; 
+            }
         }
-        else{
-            return null;
+        catch (Exception $e) {
+            throw new Exception(__CLASS__."::_get_data() -> $var, data unavailable.");
         }
     }
 
@@ -44,12 +46,17 @@
         if(!$this->conn){
             $this->conn=Database::getConnection();
         }
-        $sql="UPDATE `$this->table` SET `$var`='$value' WHERE `id`='$this->id'";
-        if($this->conn->query($sql)){
-            return true;
+        try{
+            $sql="UPDATE `$this->table` SET `$var`='$value' WHERE `id`='$this->id'";
+            if($this->conn->query($sql)){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
-        else{
-            return false;
+        catch (Exception $e) {
+            throw new Exception(__CLASS__."::_set_data() -> $var, data unavailable.");
         }
     }
 

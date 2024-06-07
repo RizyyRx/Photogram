@@ -22,8 +22,11 @@ print("_GLOBALS \n");
 print_r($GLOBALS);
 print("getallheaders() \n");
 
+echo Session::getUser()->getEmail();
+$text=$_POST['post_text'];
+$image_tmp=$_FILES['post_image']['tmp_name'];
 if(isset($_POST)){
-    Post::registerPost($_POST['post_text'],$_FILES['post_image']['tmp_name']);
+    Post::registerPost($text,$image_tmp);
 }
 
 

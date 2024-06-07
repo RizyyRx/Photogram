@@ -17,7 +17,7 @@
 				<p class="lead text-muted">Share a photo that talks about it.</p>
 				<textarea id="post_text" name="post_text" class="form-control" placeholder="What are you upto?" rows="3"></textarea>
 				<div class="input-group mb-3">
-					<input type="file" class="form-control" name="post_image" id="inputGroupFile02">
+					<input type="file" accept="image/*" class="form-control" name="post_image" id="inputGroupFile02">
 					<!-- <label class="input-group-text" for="inputGroupFile02">Upload</label> -->
 				</div>
 				<p>
